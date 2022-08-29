@@ -44,6 +44,22 @@ class BirdsController < ApplicationController
     end
   end
 
+  # DELETE /birds/:id
+  def destroy
+    bird = Bird.find_by(id: params[:id])
+    if bird
+      bird.destroy
+      head :no_content
+
+      # OR if you want to send back a json response to the front end
+      # to render a successful delete confirmation or something:
+      # bird.destroy
+      # render json: {}
+    else
+      render json: { error: "Bird not found" }, status: :not_found
+    end
+  end
+
   private
 
   def bird_params
